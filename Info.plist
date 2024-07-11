@@ -1,0 +1,4 @@
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>We need your location to provide better weather data</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>We need your location to provide better weather data</string>
