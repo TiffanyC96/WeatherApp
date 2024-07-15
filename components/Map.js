@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, ViewStyle, TextStyle } from 'react-native';
+import { StyleSheet, View, Text} from 'react-native';
 import MapView, { UrlTile } from 'react-native-maps';
 import RNPickerSelect from 'react-native-picker-select';
 import { useNavigation } from '@react-navigation/native';

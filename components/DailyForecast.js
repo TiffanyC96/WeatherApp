@@ -6,7 +6,8 @@ import { StyleSheet, ScrollView } from 'react-native';
 const DailyCard = ({ daily }) => {
 
   return (
-    <ScrollView>
+    <ScrollView
+    horizontal={true}>
       <Text>7-Day Forecast</Text>
       {daily.map((day, index) => {
         const {
@@ -25,7 +26,7 @@ const DailyCard = ({ daily }) => {
           uvi,
         } = day;
 
-        const date = new Date(dt * 1000).toLocaleDateString();
+        const date = new Date(dt * 1000).toDateString();
         const maxTempCelsius = temp.max !== undefined ? (temp.max - 273.15).toFixed(1) : 'N/A';
         const minTempCelsius = temp.min !== undefined ? (temp.min - 273.15).toFixed(1) : 'N/A';
         const feelsLikeDayCelsius = feels_like.day !== undefined ? (feels_like.day - 273.15).toFixed(1) : 'N/A';

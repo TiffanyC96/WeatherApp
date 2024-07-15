@@ -4,10 +4,9 @@ import { Card, Title, Paragraph, useTheme, Text } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 
 const WeatherCard = ({ weather, timezone }) => {
+  const { icon, temp, feels_like, humidity, wind_speed, wind_deg, wind_gust, sunrise, sunset, weather:[{description}] } = weather;
 
-  const { description, icon, temp, feels_like, humidity, wind_speed, wind_deg, wind_gust, sunrise, sunset } = weather;
-
-  const temperatureCelsius = (temp - 273.15).toFixed(1);
+  const temperatureCelsius = (temp - 273.15).toFixed(0);
   const feelsLikeCelsius = (feels_like - 273.15).toFixed(1);
   const sunriseTime = new Date(sunrise * 1000).toLocaleTimeString();
   const sunsetTime = new Date(sunset * 1000).toLocaleTimeString();
@@ -42,25 +41,86 @@ const WeatherCard = ({ weather, timezone }) => {
   }
 
   return (
-    <View>
-      <Text>Current Conditions</Text>
-      <Card>
+    <View style={styles.container}>
+      <Text style={styles.title}>Current Conditions</Text>
+      <Card style={styles.card}>
         <Card.Content>
-          <Title>{getCityName(timezone)}</Title>
-          <Card>
-            <Paragraph>{temperatureCelsius}°C</Paragraph>
+          <Title style={styles.cityName}>{getCityName(timezone)}</Title>
+          <Card style={styles.temperatureCard}>
+            <Paragraph style={styles.temperature}>{temperatureCelsius}°C</Paragraph>
           </Card>
-          <Paragraph>Feels like: {feelsLikeCelsius}°C</Paragraph>
-          <Paragraph>{description}</Paragraph>
-          <Paragraph>Humidity: {humidity}%</Paragraph>
-          <Paragraph>Wind: {wind_speed}m/s {getWindDirection(wind_deg)}</Paragraph>
-          <Paragraph>Gust: {wind_gust}</Paragraph>
-          <Paragraph>Sunrise: {sunriseTime}</Paragraph>
-          <Paragraph>Sunset: {sunsetTime}</Paragraph>
+          <Paragraph style={styles.feelsLike}>Feels like: {feelsLikeCelsius}°C</Paragraph>
+          <View style={styles.information}>
+            <View style={styles.infoItem}>
+              <Paragraph style={styles.infoText}>{description? description : 'No description available'}</Paragraph>
+            </View>
+            <View style={styles.infoItem}>
+              <Paragraph style={styles.infoText}>Humidity: {humidity}%</Paragraph>
+            </View>
+            <View style={styles.infoItem}>
+              <Paragraph style={styles.infoText}>Wind: {wind_speed}m/s {getWindDirection(wind_deg)}</Paragraph>
+            </View>
+            <View style={styles.infoItem}>
+              <Paragraph style={styles.infoText}>Gust: {wind_gust? wind_gust:'N/A'}</Paragraph>
+            </View>
+            <View style={styles.infoItem}>
+              <Paragraph style={styles.infoText}>Sunrise: {sunriseTime}</Paragraph>
+            </View>
+            <View style={styles.infoItem}>
+              <Paragraph style={styles.infoText}>Sunset: {sunsetTime}</Paragraph>
+            </View>
+          </View>
         </Card.Content>
       </Card>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    margin: 16,
+  },
+  card: {
+    padding: 16,
+    borderRadius: 8,
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 24,
+    marginBottom: 16,
+  },
+  cityName: {
+    textAlign: 'center',
+    fontSize: 20,
+    marginBottom: 8,
+  },
+  temperatureCard: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  temperature: {
+    fontSize: 40,
+    color: 'purple',
+    height:50,
+    paddingTop:30
+  },
+  feelsLike: {
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  information: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  infoItem: {
+    width: '48%',
+    marginBottom: 8,
+  },
+  infoText: {
+    textAlign: 'center',
+  },
+});
 
 export default WeatherCard;
