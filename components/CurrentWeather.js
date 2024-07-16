@@ -4,7 +4,7 @@ import { Card, Title, Paragraph, useTheme, Text } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 
 const WeatherCard = ({ weather, timezone }) => {
-  const { icon, temp, feels_like, humidity, wind_speed, wind_deg, wind_gust, sunrise, sunset, weather:[{description}] } = weather;
+  const { temp, feels_like, humidity, wind_speed, wind_deg, wind_gust, sunrise, sunset, weather:[{description, icon}] } = weather;
 
   const temperatureCelsius = (temp - 273.15).toFixed(0);
   const feelsLikeCelsius = (feels_like - 273.15).toFixed(1);
@@ -46,9 +46,11 @@ const WeatherCard = ({ weather, timezone }) => {
       <Card style={styles.card}>
         <Card.Content>
           <Title style={styles.cityName}>{getCityName(timezone)}</Title>
-          <Card style={styles.temperatureCard}>
             <Paragraph style={styles.temperature}>{temperatureCelsius}°C</Paragraph>
-          </Card>
+            <View style={styles.iconContainer}>
+              <Image source={{uri:weatherIconUrl}} style={styles.icon}/>
+              </View>
+            
           <Paragraph style={styles.feelsLike}>Feels like: {feelsLikeCelsius}°C</Paragraph>
           <View style={styles.information}>
             <View style={styles.infoItem}>
@@ -94,16 +96,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 8,
   },
-  temperatureCard: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 16,
-  },
   temperature: {
     fontSize: 40,
     color: 'purple',
     height:50,
-    paddingTop:30
+    paddingTop:30,
+    textAlign:'center'
   },
   feelsLike: {
     textAlign: 'center',
@@ -120,6 +118,17 @@ const styles = StyleSheet.create({
   },
   infoText: {
     textAlign: 'center',
+  },
+  icon:{
+    width: 60,
+    height:60,
+    backgroundColor:'plum',
+    opacity:0.7,
+    borderRadius:100
+  },
+  iconContainer: {
+    alignItems: 'center',
+    marginBottom: 16,
   },
 });
 

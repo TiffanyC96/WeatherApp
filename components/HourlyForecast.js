@@ -3,6 +3,7 @@ import { View, Image, FlatList, StyleSheet } from 'react-native';
 import { Card, Title, Paragraph, Text } from 'react-native-paper';
 
 const HourlyForecast = ({ weather }) => {
+  
   if (!weather || weather.length === 0) {
     return (
       <View>
@@ -12,11 +13,10 @@ const HourlyForecast = ({ weather }) => {
   }
 
   const renderItem = ({ item }) => {
-    const { dt, temp, feels_like, pressure, humidity, weather: weatherInfo } = item;
-    const weatherDesc = weatherInfo[0].description;
-    const weatherIcon = weatherInfo[0].icon;
+    const { dt, temp, feels_like, pressure, humidity, weather: [{ description, icon }] } = item;
 
     const temperatureCelsius = (temp - 273.15).toFixed(1);
+    const feelsLikeCelsius = (feels_like - 273.15).toFixed(1);
 
     const date = new Date(dt * 1000);
     let hours = date.getHours();
@@ -36,18 +36,22 @@ const HourlyForecast = ({ weather }) => {
 
     return (
       <View>
-        <Card>
-          <Card.Content>
-            {!isToday && <Title>{formattedDate}</Title>}
-            <Title>{formattedTime}</Title>
-            <Title>Temperature: {temperatureCelsius}°C</Title>
-            <Paragraph>Feels Like: {feels_like}K</Paragraph>
-            <Paragraph>Pressure: {pressure} hPa</Paragraph>
-            <Paragraph>Humidity: {humidity}%</Paragraph>
-            <Paragraph>Weather: {weatherDesc}</Paragraph>
+        <Card style={styles.card}>
+          <Card.Content><Title style={styles.dateTitle}>{formattedDate}</Title>
+          <View style={styles.iconContainer}>
             <Image
-              source={{ uri: `http://openweathermap.org/img/wn/${weatherIcon}@2x.png` }}
+              source={{ uri: `http://openweathermap.org/img/wn/${icon}.png` }}
+              style={styles.icon}
             />
+            </View>
+            <Title style={styles.title}>{formattedTime}</Title>
+            <View>
+              <Title>Temperature: {temperatureCelsius}°C</Title>
+              <Paragraph>Feels Like: {feelsLikeCelsius}°C</Paragraph>
+              <Paragraph>Pressure: {pressure} hPa</Paragraph>
+              <Paragraph>Humidity: {humidity}%</Paragraph>
+              <Paragraph>Weather: {description}</Paragraph>
+            </View>
           </Card.Content>
         </Card>
       </View>
@@ -55,13 +59,14 @@ const HourlyForecast = ({ weather }) => {
   };
 
   return (
-    <View>
-      <Text>Hourly Weather</Text>
+    <View style={styles.container}>
+      <Text style={styles.headerText}>Hourly Weather</Text>
       <FlatList
         data={weather}
         renderItem={renderItem}
         keyExtractor={item => item.dt.toString()}
         horizontal={true}
+        contentContainerStyle={styles.listContent}
         showsHorizontalScrollIndicator={false}
       />
     </View>
@@ -72,6 +77,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
   },
   listContent: {
     paddingHorizontal: 16,
@@ -85,6 +96,9 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 10,
     width: 200,
+    height: 425,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   weatherIcon: {
     width: 50,
@@ -94,6 +108,24 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  dateTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  icon:{
+    width: 60,
+    height:60,
+    backgroundColor:'plum',
+    opacity:0.7,
+    borderRadius:100
+  },
+  iconContainer: {
+    alignItems: 'center',
+    marginBottom: 16,
   },
 });
 
