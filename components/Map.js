@@ -4,36 +4,9 @@ import MapView, { UrlTile } from 'react-native-maps';
 import RNPickerSelect from 'react-native-picker-select';
 import { useNavigation } from '@react-navigation/native';
 
-const Legend = () => (
-    <View style={styles.legendContainer}>
-        <Text style={styles.legendTitle}>Temperature Legend</Text>
-        <View style={styles.legendItem}>
-            <View style={[styles.legendColor, { backgroundColor: '#821692' }]} />
-            <Text style={styles.legendText}>-65°C</Text>
-        </View>
-        <View style={styles.legendItem}>
-            <View style={[styles.legendColor, { backgroundColor: '#208cec' }]} />
-            <Text style={styles.legendText}>-20°C</Text>
-        </View>
-        <View style={styles.legendItem}>
-            <View style={[styles.legendColor, { backgroundColor: '#23dddd' }]} />
-            <Text style={styles.legendText}>0°C</Text>
-        </View>
-        <View style={styles.legendItem}>
-            <View style={[styles.legendColor, { backgroundColor: '#c2ff28' }]} />
-            <Text style={styles.legendText}>10°C</Text>
-        </View>
-        <View style={styles.legendItem}>
-            <View style={[styles.legendColor, { backgroundColor: '#fc8014' }]} />
-            <Text style={styles.legendText}>30°C</Text>
-        </View>
-    </View>
-);
 
 const WeatherMap = () => {
-    const [tileType, setTileType] = useState('temp_new');
-    const API_KEY = 'd9865f49c0c2460f4564894d107561d5';
-    
+    const [tileType, setTileType] = useState('temp_new');    
 
     const navigation = useNavigation();
 
@@ -58,7 +31,7 @@ const WeatherMap = () => {
         });
     }, [navigation, tileType]);
 
-    const tileUrl = `http://tile.openweathermap.org/map/${tileType}/{z}/{x}/{y}.png?appid=${API_KEY}`;
+    const tileUrl = `http://tile.openweathermap.org/map/${tileType}/{z}/{x}/{y}.png?appid=d9865f49c0c2460f4564894d107561d5`;
     console.log(tileUrl)
     return (
         <View style={styles.container}>
@@ -78,7 +51,6 @@ const WeatherMap = () => {
                     maximumAge={1000}
                 />
             </MapView>
-            <Legend />
         </View>
     );
 };
