@@ -117,8 +117,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   icon:{
-    width: 60,
-    height:60,
+    width: 45,
+    height:45,
     backgroundColor:'plum',
     opacity:0.7,
     borderRadius:100

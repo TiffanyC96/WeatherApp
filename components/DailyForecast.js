@@ -32,7 +32,7 @@ const DailyCardItem = ({ day }) => {
     <Card style={styles.card}>
       <Card.Content>
         <Title>{date}</Title>
-        <View style={styles.row}>
+        <View style={styles.iconContainer}>
           {weatherIconUrl ? <Image source={{ uri: weatherIconUrl }} style={styles.icon} /> : null}
           <Paragraph>{description}</Paragraph>
         </View>
@@ -99,10 +99,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  icon: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
+  icon:{
+    width: 45,
+    height:45,
+    backgroundColor:'plum',
+    opacity:0.7,
+    borderRadius:100
+  },
+  iconContainer: {
+    alignItems: 'center',
+    marginBottom: 16,
   },
 });
 
