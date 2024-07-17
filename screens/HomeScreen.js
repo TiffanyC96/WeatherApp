@@ -6,7 +6,6 @@ import DailyCard from '../components/DailyForecast';
 import SearchBar from '../components/Search';
 
 const HomeScreen = ({ weatherData }) => {
-  const [location, setLocation] = useState(null);
 
   if (!weatherData) {
     return (
