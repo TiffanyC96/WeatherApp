@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ScrollView, View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import React from 'react';
+import { ScrollView, View, ActivityIndicator, StyleSheet } from 'react-native';
 import CurrentWeather from '../components/CurrentWeather';
 import HourlyForecast from '../components/HourlyForecast';
 import DailyCard from '../components/DailyForecast';
