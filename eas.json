@@ -27,7 +27,8 @@
         },
         "android": {
           "distribution": "internal",
-          "withoutCredentials": true
+          "withoutCredentials": true,
+          "gradleCommand": ":app:assembleDebug"
         },
         "ios": {
           "simulator": true
