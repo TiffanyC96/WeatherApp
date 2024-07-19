@@ -5,11 +5,9 @@ import HourlyForecast from '../components/HourlyForecast';
 import DailyCard from '../components/DailyForecast';
 import SearchBar from '../components/Search';
 
-const HomeScreen = ({ weatherData }) => {
-
+const HomeScreen = ({ weatherData, updateWeatherData }) => {
   if (!weatherData) {
     return (
-      // Render loading indicator while weatherData is null or undefined
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
@@ -18,7 +16,7 @@ const HomeScreen = ({ weatherData }) => {
 
   return (
     <View style={styles.container}>
-      <SearchBar />
+      <SearchBar updateWeatherData={updateWeatherData} />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <CurrentWeather weather={weatherData.current} timezone={weatherData.timezone} />
         <HourlyForecast weather={weatherData.hourly} />

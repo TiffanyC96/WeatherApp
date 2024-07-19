@@ -8,7 +8,6 @@ import ForecastScreen from './screens/MapScreen';
 import SettingsScreen from './screens/SettingsScreen';
 
 import { fetchWeatherData } from './api/fetchWeatherData';
-import { getCurrentLocation } from './services/getCurrentLocation';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,31 +16,44 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-      const fetchData = async () => {
-          try {
-              const data = await fetchWeatherData();
-              setWeatherData(data);
-              setLoading(false);
-          } catch (error) {
-              console.error('Error fetching data:', error);
-              setLoading(false);
-              setError('Error fetching data');
-          }
-      };
+  const updateWeatherData = async (location) => {
+    setLoading(true);
+    try {
+      const data = await fetchWeatherData(location);
+      setWeatherData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+      setError('Error fetching data');
+    }
+  };
 
-      fetchData();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchWeatherData();
+        setWeatherData(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+        setError('Error fetching data');
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
-      <NavigationContainer>
-          <Tab.Navigator initialRouteName="Home">
-              <Tab.Screen name="Home" options={{ tabBarLabel: 'Home' }}>
-                  {(props) => <HomeScreen {...props} weatherData={weatherData} />}
-              </Tab.Screen>
-              <Tab.Screen name="Maps" component={ForecastScreen}/>
-              <Tab.Screen name="Settings" component={SettingsScreen} />
-          </Tab.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Tab.Navigator initialRouteName="Home">
+        <Tab.Screen name="Home" options={{ tabBarLabel: 'Home' }}>
+          {(props) => <HomeScreen {...props} weatherData={weatherData} updateWeatherData={updateWeatherData} />}
+        </Tab.Screen>
+        <Tab.Screen name="Maps" component={ForecastScreen} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }

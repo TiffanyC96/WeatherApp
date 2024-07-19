@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, FlatList, TouchableOpacity, Text } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 
-const SearchBar = ({ onLocationSelected }) => {
+const SearchBar = ({ updateWeatherData }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [results, setResults] = useState([]);
 
@@ -29,7 +29,7 @@ const SearchBar = ({ onLocationSelected }) => {
     const handleLocationPress = (location) => {
         setSearchQuery(location.name);
         setResults([]);
-        onLocationSelected(location);
+        updateWeatherData(location);
     };
 
     return (
