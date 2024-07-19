@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Weather",
+    "runtimeVersion":"sdkVersion",
     "slug": "Weather",
     "version": "1.0.0",
     "orientation": "portrait",
